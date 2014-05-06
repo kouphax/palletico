@@ -15,8 +15,7 @@
   :cljsbuild {
     :builds [{:id "palletico"
               :source-paths ["src"]
-              :compiler {
-                :output-to "palletico.js"
-                :output-dir "out"
-                :optimizations :none
-                :source-map true}}]})
+              :compiler { :output-to "palletico.js"
+                          :output-dir "out"
+                          :optimizations :none
+                          :source-map true}}]})

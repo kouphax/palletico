@@ -1,10 +1,8 @@
 (ns palletico.core
-  (:require [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [ajax.core :refer [GET]]))
 
-(def palettes
-  (atom { "greener" ["#FFFFFF" "#999999" "#333333" "#000000"]
-          "lettuce" ["#BBBCCC" "#FDFDFD" "#CECEFE"]
-          "snot"    ["#F33F3F" "#333999" "#3332233" "#030303"] }))
+(enable-console-print!)
 
 (def selected-palette
   (atom nil))
@@ -12,32 +10,40 @@
 (defn mini-palette [colours]
   [:div.mini-palette
     (for [colour colours]
-      [:div { :style { :background-color  colour } }])])
-
+      [:div { :key colour
+              :style { :background-color  colour } }])])
 
 (defn mega-palette [colours]
   [:div.mega-palette
-    (for [colour colours]
-      [:div { :style { :background-color  colour
-                       :width             (str (/ 100 (count colours)) "%")
+    (for [colour colours
+          :let [width     (/ 100 (count colours))
+                width-pct (str width "%")]]
+      [:div { :key colour
+              :style { :background-color  colour
+                       :width             width-pct
                        :display           :inline-block
                        :height            "100%" } }])])
 
+; use sidr
 (defn palette-list [palettes]
   [:ul
     (for [[name colours] palettes]
-      [:li
+      [:li { :key name }
         [:a.palette-name { :on-click #(reset! selected-palette colours)
                            :href "#" }  name]
         [mini-palette colours]])])
 
-(defn application []
+(defn application [pallettes]
   [:div#application
-    [palette-list @palettes]
+    [palette-list pallettes]
     [mega-palette @selected-palette]])
 
-(reagent/render-component [application]
-                          (.-body js/document))
+(defn render-application [pallettes]
+  (reagent/render-component
+    [application pallettes]
+    (.-body js/document)))
 
-
+(GET "/palletes.json" { :handler render-application
+                        :response-format :json
+                        :error-handler println })
 
