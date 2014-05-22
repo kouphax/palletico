@@ -1,21 +1,15 @@
 <html>
   <head>
     <style>
-      .mini-palette {
-      }
-
       .mini-palette div {
         display: inline-block;
         height:20px;
         width:20px;
         margin-left: 2px;
+        margin-bottom:10px;
         border:1px solid #333;
       }
 
-      .palette-name {
-        display:inline-block;
-        width:100px;
-      }
 
       .mega-palette {
         position:fixed;
@@ -26,12 +20,32 @@
         z-index:-1;
       }
 
+      .menu ul {
+        background-color: #fff;
+        width: 200px;
+        list-style-type:none;
+        font-family: "Open Sans";
+        padding: 0 0;
+        padding-bottom:5px;
+        max-height: 50%;
+        overflow: scroll;
+        border:1px solid #444;
+      }
+
+      .menu .pallette-name {
+        line-height:2.5rem;
+      }
+
+      .menu ul li {
+        margin: 15px;
+        border-bottom:1px solid #444;
+      }
+
       .menu-button {
-        border-radius: 1rem;
-        border: 3px solid #666;
-        padding: 0 5px;
+        border-radius: 0rem;
+        border: 1px solid #666;
+        padding: 0 8px;
         font-size:2rem;
-        font-weight:bold;
         color:#666;
       }
     </style>
